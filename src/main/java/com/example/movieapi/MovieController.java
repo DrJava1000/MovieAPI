@@ -29,8 +29,9 @@ public class MovieController
     public Movie getMovie(@PathVariable int id)
     {
         Movie resultMovie = movieDAO.getById(id);
+        System.out.println(resultMovie);
         if(resultMovie == null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified ID " + id + " does not have associated movie.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified movie doesn't exist.");
         else
             return resultMovie;
     }
@@ -51,9 +52,9 @@ public class MovieController
     @RequestMapping(value = "/movies/{id}", method = RequestMethod.DELETE)
     public String deleteMovie(@PathVariable int id) {
         if(!movieDAO.deleteByID(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified ID " + id + " does not have associated movie.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified movie doesn't exist.");
         }else{
-            return "ID " + id + " deleted.";
+            return "Movie (" + id + ") has been deleted.";
         }
     }
 }
