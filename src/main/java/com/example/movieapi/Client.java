@@ -37,7 +37,7 @@ public class Client {
                     break;
                 }
                 case 2: {
-                    System.out.println("\ngetMovie() hasn't been implemented yet.\n");
+                    cl.getMovieByID();
                     break;
                 }
                 case 3: {
@@ -49,7 +49,7 @@ public class Client {
                     break;
                 }
                 case 5: {
-                    System.out.println("\ndeleteMovie() hasn't been implemented yet.\n");
+                    cl.deleteMovieByID();
                     break;
                 }
                 default: {
@@ -106,13 +106,13 @@ public class Client {
 
     public void getAllMovies()
     {
-        ParameterizedTypeReference<ArrayList<Movie>> nameRef =
+        ParameterizedTypeReference<ArrayList<Movie>> movieRef =
                 new ParameterizedTypeReference<>() {};
 
         try
         {
             ResponseEntity<ArrayList<Movie>> response =
-                    restTemplate.exchange(baseURL + "/movies/", HttpMethod.GET, null, nameRef);
+                    restTemplate.exchange(baseURL + "/movies/", HttpMethod.GET, null, movieRef);
 
             ArrayList<Movie> movies = response.getBody();
             System.out.println("\nAvailable Movies");
@@ -125,6 +125,71 @@ public class Client {
 
         }catch(HttpClientErrorException restEx)
         {
+            System.out.println(parseResponseMessage(restEx.getMessage()) + "\n");
+        }
+    }
+
+    public void getMovieByID()
+    {
+        int movieID = 0;
+
+        try {
+            System.out.print("\nEnter desired movie ID for movie you want to retrieve: ");
+            movieID = input.nextInt();
+            System.out.println("\n");
+        } catch (InputMismatchException ime) {
+            System.out.println("\nError: You must enter an integer ID. Exiting... \n");
+            input.next();
+            return;
+        }
+
+        ParameterizedTypeReference<Movie> movieRef = new ParameterizedTypeReference<>() {};
+
+        try
+        {
+            ResponseEntity<Movie> response =
+                    restTemplate.exchange(baseURL + "/movies/" + movieID, HttpMethod.GET, null, movieRef);
+
+            Movie selectedMovie = response.getBody();
+            System.out.println("\nSelected Movie");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+
+            System.out.println(selectedMovie + "\n");
+
+        }catch(HttpClientErrorException restEx)
+        {
+            System.out.println(parseResponseMessage(restEx.getMessage()) + "\n");
+        }
+    }
+
+    public void deleteMovieByID() {
+        int movieID = 0;
+
+        try
+        {
+            System.out.print("\nEnter desired movie ID for movie you want to delete: ");
+            movieID = input.nextInt();
+            System.out.println("\n");
+        } catch (InputMismatchException ime) {
+            System.out.println("\nError: You must enter an integer ID. Exiting... \n");
+            input.next();
+            return;
+        }
+
+        ParameterizedTypeReference<String> stringRef = new ParameterizedTypeReference<>() {};
+        try
+        {
+            ResponseEntity<String> response =
+                    restTemplate.exchange(baseURL + "/movies/" + movieID, HttpMethod.DELETE, null, stringRef);
+
+            String successfulDeletionMessage = response.getBody();
+
+            System.out.println(successfulDeletionMessage + "\n");
+            System.out.println("-------------------------------");
+            System.out.println("-------------------------------");
+
+        } catch (HttpClientErrorException restEx) {
             System.out.println(parseResponseMessage(restEx.getMessage()) + "\n");
         }
     }
