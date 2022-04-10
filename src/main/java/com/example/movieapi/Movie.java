@@ -7,13 +7,28 @@ import java.util.Objects;
 @Table(name = "movie")
 public class Movie {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
+    @Basic
+    @Column(name = "title")
     private String title;
+
+    @Basic
+    @Column(name = "genre")
     private String genre;
+
+    @Basic
+    @Column(name = "rate")
     private double rate;
+
+    @Basic
+    @Column(name = "description")
     private String description;
+
+    @Basic
+    @Column(name = "rateNum")
     private int rateNum;
 
     public Movie(){
@@ -25,8 +40,6 @@ public class Movie {
     }
 
     // ID Getter/Setter
-    @Basic
-    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -35,8 +48,6 @@ public class Movie {
     }
 
     // Title Getter/Setter
-    @Basic
-    @Column(name = "title")
     public String getTitle() {
         return title;
     }
@@ -45,8 +56,6 @@ public class Movie {
     }
 
     // Genre Getter/Setter
-    @Basic
-    @Column(name = "genre")
     public String getGenre() {
         return genre;
     }
@@ -55,8 +64,6 @@ public class Movie {
     }
 
     // Rate Getter/Setter
-    @Basic
-    @Column(name = "rate")
     public double getRate() {
         return rate;
     }
@@ -65,8 +72,6 @@ public class Movie {
     }
 
     // Description Getter/Setter
-    @Basic
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -75,8 +80,6 @@ public class Movie {
     }
 
     // RateNum Getter/Setter
-    @Basic
-    @Column(name = "rateNum")
     public int getRateNum() {
         return rateNum;
     }
@@ -99,5 +102,11 @@ public class Movie {
     @Override
     public int hashCode() {
         return Objects.hash(id, title);
+    }
+
+    @Override
+    public String toString(){
+        return "ID: " + id + "\n Title: " + title + "\n Genre " + genre + "\n Rate: " + rate
+                + "\n Description: " + description + "\n RateNum: " + rateNum;
     }
 }
