@@ -174,7 +174,8 @@ public class Client {
         {
             try
             {
-                System.out.print("\nEnter ID of movie you would like to update: ");
+                System.out.println("\nNOTE: If you enter an invalid numerical id, a new movie will be created instead. ");
+                System.out.print("Enter ID of movie you would like to update: ");
                 id = input.nextInt();
                 input.nextLine();
                 newMovie.setId(id);
@@ -190,19 +191,13 @@ public class Client {
         String title = "";
         System.out.print("\nEnter title: ");
         title = input.nextLine();
-        if(!title.equals(""))
-        {
-            newMovie.setTitle(title);
-        }
+        newMovie.setTitle(title);
 
         // Prompt for Genre
         String genre = "";
         System.out.print("\nEnter Genre: ");
         genre = input.nextLine();
-        if(!genre.equals(""))
-        {
-            newMovie.setGenre(genre);
-        }
+        newMovie.setGenre(genre);
 
         // Prompt for Rate
         double rate = 0.0;
@@ -210,10 +205,7 @@ public class Client {
         {
             System.out.print("\nEnter Rate (a number): ");
             String rateUnchecked = input.nextLine();
-            if(!rateUnchecked.equals(""))
-            {
-                newMovie.setRate(Double.parseDouble(rateUnchecked));
-            }
+            newMovie.setRate(Double.parseDouble(rateUnchecked));
         }catch(NumberFormatException ime)
         {
             System.out.println("\nError: Not a number. Exiting... \n");
@@ -224,22 +216,15 @@ public class Client {
         String description = "";
         System.out.print("\nEnter Description: ");
         description = input.nextLine();
-        if(!description.equals(""))
-        {
-            System.out.println("Description set");
-            newMovie.setDescription(description);
-        }
+        newMovie.setDescription(description);
 
         // Prompt for RateNum
         double rateNum = 0;
         try
         {
-            System.out.print("\nEnter RateNum: ");
+            System.out.print("\nEnter RateNum (a number): ");
             String rateNumUnchecked = input.nextLine();
-            if(!rateNumUnchecked.equals(""))
-            {
-                newMovie.setRateNum((int) Math.round(Double.parseDouble(rateNumUnchecked)));
-            }
+            newMovie.setRateNum((int) Math.round(Double.parseDouble(rateNumUnchecked)));
         }catch(NumberFormatException ime)
         {
             System.out.println("\nError: Not a number. Exiting... \n");
@@ -304,9 +289,9 @@ public class Client {
 
             String successfulDeletionMessage = response.getBody();
 
-            System.out.println(successfulDeletionMessage + "\n");
+            System.out.println("\n" + successfulDeletionMessage);
             System.out.println("-------------------------------");
-            System.out.println("-------------------------------");
+            System.out.println("-------------------------------\n");
 
         } catch (HttpClientErrorException restEx) {
             System.out.println(parseResponseMessage(restEx.getMessage()) + "\n");
